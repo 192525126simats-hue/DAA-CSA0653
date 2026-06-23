@@ -1,0 +1,70 @@
+                                                                           Name:Bhargavi G(192525126)   
+Investments=[
+("A", 20000, 25000),
+    ("B", 30000, 40000),
+    ("C", 40000, 50000),
+    ("D", 50000, 70000)
+]
+budget = 80000
+investments.sort(key=lambda x: x[2] / x[1], reverse=True)
+selected = []
+total_return = 0
+for name, capital, ret in investments:
+    if budget >= capital:
+        selected.append(name)
+        budget -= capital
+        total_return += ret
+print("Selected:", selected)
+print("Total Return:", total_return)
+
+
+capital = [20000, 30000, 40000, 50000]
+returns = [25000, 40000, 50000, 70000]
+names = ["A", "B", "C", "D"]
+capital = [c // 1000 for c in capital]
+budget = 80000 //1000
+n = len(capital)
+dp = [[0] * (budget + 1) for _ in range(n + 1)]
+for i in range(1, n + 1):
+    for w in range(budget + 1):
+        if capital[i - 1] <= w:
+            dp[i][w] = max( 
+                dp[i - 1][w],
+                returns[i - 1] + dp[i - 1][w - capital[i - 1]]
+            )
+        else:
+            dp[i][w] = dp[i - 1][w]
+print("Maximum Return =", dp[n][budget])
+
+
+
+
+
+weights = [10, 20, 30, 25]
+profits = [60, 100, 120, 110]
+items = ["P1", "P2", "P3", "P4"]
+capacity = 50
+ratio = [(profits[i]/weights[i], items[i], weights[i], profits[i])
+         for i in range(len(items))]
+ratio.sort(reverse=True)
+total_w = total_p = 0
+selected = []
+for r, item, w, p in ratio:
+    if total_w + w <= capacity:
+        selected.append(item)
+        total_w += w
+        total_p += p
+print("Greedy Solution")
+print("Selected Packages:", selected)
+print("Profit =", total_p)
+n = len(items)
+dp = [[0]*(capacity+1) for _ in range(n+1)]
+for i in range(1, n+1):
+    for w in range(capacity+1):
+        if weights[i-1] <= w:
+            dp[i][w] = max(profits[i-1] + dp[i-1][w-weights[i-1]],
+                           dp[i-1][w])
+        else:
+            dp[i][w] = dp[i-1][w]
+print("\nDynamic Programming Solution")
+print("Optimal Profit =", dp[n][capacity])
