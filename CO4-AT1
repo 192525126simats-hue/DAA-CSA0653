@@ -23,6 +23,11 @@ for i in range(n-1):
                         visited[b]=True
 print("total cost=",cost)
 
+Number of vertices, V = 3
+Time Complexity = O(3²) = O(9)
+Space Complexity = O(3²) = O(9)
+
+
 
 
 
@@ -47,3 +52,7 @@ for u, v, w in edges:
         cost += w
         parent[find(u)] = find(v)
 print("Total cost =", cost)
+
+Time Complexity = O(E log E) = O(5 log 5)
+Space Complexity = O(V + E) = O(4 + 5) = O(9)
+
