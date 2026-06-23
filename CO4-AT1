@@ -1,1 +1,48 @@
+graph=[
+    [0,2,3],
+    [2,0,1],
+    [3,1,0]]
+n=len(graph)
+visited=[False]*n
+visited[0]=True
+cost=0
+print("Edges in MST:")
+for i in range(n-1):
+    min_weight=999
+    a=b=0
+    for u in range(n):
+        if visited[u]:
+            for v in range(n):
+                if not visited[v] and graph[u][v] != 0:
+                    if graph[u][v] < min_weight:
+                        min_weight=graph[u][v]
+                        a,b=u,v
+                        print(a,"-",b,"=",min_weight)
+                        cost+=min_weight
+                        visited[b]=True
+print("total cost=",cost)
+
+
+
+edges=[
+    (0,1,2),
+    (0,2,3),
+    (1,2,1),
+    (1,3,4),
+    (2,3,5)]
+n=4
+edges.sort(key=lambda x: x[2])
+parent=[0,1,2,3]
+cost=0
+def find(x):
+    if parent[x] == x:
+        return x
+    return find(parent[x])
+print("Edges in MST:")
+for u, v, w in edges:
+    if find(u) != find(v):
+        print(u, "-", v, "=", w)
+        cost += w
+        parent[find(u)] = find(v)
+print("Total cost =", cost)
 
