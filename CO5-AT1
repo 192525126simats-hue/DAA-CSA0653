@@ -1,0 +1,51 @@
+                                                                        Name:Bhargavi G(192525126)
+jobs = ["J1", "J2"]
+employees = ["E1", "E2"]
+result = {}
+def backtrack(i):
+    if i == len(jobs):
+        return True
+    for emp in employees:
+        if emp not in result.values():
+            result[jobs[i]] = emp
+            if backtrack(i + 1):
+                return True
+            del result[jobs[i]]
+    return False
+backtrack(0)
+print(result)
+
+
+
+
+graph = {
+    'Math': ['Physics', 'Chemistry'],
+    'Physics': ['Math', 'Biology'],
+    'Chemistry': ['Math'],
+    'Biology': ['Physics']
+}
+slots = ['Slot1', 'Slot2', 'Slot3']
+schedule = {}
+def is_safe(exam, slot):
+    for neighbor in graph[exam]:
+        if neighbor in schedule and schedule[neighbor] == slot:
+            return False
+    return True
+def solve(exams, index):
+    if index == len(exams):
+        return True
+    exam = exams[index]
+    for slot in slots:
+        if is_safe(exam, slot):
+            schedule[exam] = slot
+            if solve(exams, index + 1):
+                return True
+            del schedule[exam]   
+    return False
+exams = ['Math', 'Physics', 'Chemistry', 'Biology']
+if solve(exams, 0):
+    print("Exam Schedule:")
+    for exam in exams:
+        print(exam, "->", schedule[exam])
+else:
+    print("No schedule possible")
